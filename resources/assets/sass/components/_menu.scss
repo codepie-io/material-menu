@@ -1,0 +1,128 @@
+@import "../variables/variables";
+@import "../mixins/mixins";
+
+// ==========  Menu   ========== //
+
+.md-menu-backdrop {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.md-menu-wrapper {
+  visibility: hidden;
+  position: fixed;
+  @include shadow-2dp();
+  z-index: 100;
+  border-radius: 2px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  overflow: visible;
+  background-color: #fff;
+  transition-property: transform, opacity;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.25,.8,.25,1);
+  transform-origin: left top 0px;
+  transform: scale(.5);
+
+  &[data-width="5"] {
+    min-width: $menu-width-5;
+  }
+
+  &[data-width="4"] {
+    min-width: $menu-width-4;
+  }
+
+  &[data-width="3"] {
+    min-width: $menu-width-3;
+  }
+
+  & .md-menu > * {
+    opacity: 0;
+  }
+
+  &--open{
+    z-index:100;
+    visibility:visible;
+    transform: scale(1);
+    opacity: 1;
+    & > .md-menu > *{
+      opacity: 1;
+      transition: all .2s cubic-bezier(.55,0,.55,.2);
+      transition-delay: .1s;
+    }
+  }
+
+  &--leaving{
+    opacity: 0 !important;
+    transition-duration: 200ms !important;
+    transition-delay: .1s;
+  }
+
+}
+
+.md-menu{
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  max-height: $menu-max-height;
+  overflow-y: auto;
+  width: 100%;
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    min-height: 48px;
+    height: 48px;
+    align-content: center;
+    justify-content: flex-start;
+    line-height: 48px;
+    &.md-button{
+      text-align: left;
+      border-radius: 0;
+      margin: auto 0;
+      font-size: 15px;
+      text-transform: none;
+      font-weight: 400;
+      height: 100%;
+      padding-left: 16px;
+      padding-right: 16px;
+      width: 100%;
+    }
+    &.md-button--has-icon{
+      padding-left: 36px;
+    }
+    &.is-disabled{
+      color: $menu-disabled-color !important;
+      background: none !important;
+      cursor: not-allowed;
+    }
+  }
+
+  &__divider{
+    margin-top: 4px;
+    margin-bottom: 4px;
+    height: 1px;
+    min-height: 1px;
+    max-height: 1px;
+    width: 100%;
+  }
+
+}
+
+.md-menu-bar-menu{
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  max-height: 304px;
+  overflow-y: auto;
+}
+
+
