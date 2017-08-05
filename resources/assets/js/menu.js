@@ -46,7 +46,7 @@
     MaterialMenu.prototype.Default = {
       position: 'bottom right',
       offset: false,
-      textField: false,
+      selected: false,
       location: 'top', //top bottom auto follow
       follow: null,
       type: null
@@ -88,7 +88,6 @@
 
       this.width = this.$menu.width()
       this.height = this.$menu.height()
-      console.log(this)
       this.toggle()
       // follow
       /*if(typeof this.config.follow !== typeof undefined && this.config.follow != null ){
@@ -105,8 +104,11 @@
     }
 
     MaterialMenu.prototype.handleItemClick_ = function (e) {
-      this.$menu.trigger('selected', ['l', 'value'])
-      this.hide()
+      let data = e.originalEvent.target.getAttribute('data-value')
+      this.$menu.trigger('selected', data)
+      window.setTimeout(function () {
+        this.hide()
+      }.bind(this), 10)
     }
 
     MaterialMenu.prototype.handleClickForBackDrop = function (e) {
@@ -125,7 +127,6 @@
       if (this.config.location != 'auto') {
         this.setPosition_(this.config.position)
       }
-
       this.setPosition_(this.config.position, rect)
       this.setLocation_(this.config.location, rect)
 
@@ -137,6 +138,11 @@
       }
       this.$menu.addClass(this.Classes_.IS_OPEN)
       this.$button.attr('aria-hidden', 'false')
+      this.$menu.trigger(Event.SHOW)
+    }
+
+    MaterialMenu.prototype.emitSelectData_ = function (){
+
     }
 
     MaterialMenu.prototype.hide = function () {
@@ -146,6 +152,7 @@
       }.bind(this), this.Constant_.CLOSE_TIMEOUT)
       $('.' + this.Classes_.BACKDROP).remove()
       this.$button.attr('aria-hidden', 'true')
+
     }
 
     MaterialMenu.prototype.toggle = function () {
@@ -153,8 +160,6 @@
     }
 
     MaterialMenu.prototype.setPosition_ = function (p, rect) {
-      console.log(rect)
-
       let position = {
         top: rect.top,
         bottom: rect.bottom,

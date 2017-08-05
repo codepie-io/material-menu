@@ -29,6 +29,11 @@
     <link href="css/menu.css" rel="stylesheet">
     <link href="css/docs.css" rel="stylesheet">
     <link href="vendor/highlight/styles/vs.css" rel="stylesheet">
+    <style>
+        .md-menu__item.is-disabled{
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body class="has-fixed-header md-layout md-layout--column md-align md-align--center-center" style="min-height: 100vh">
 
@@ -139,13 +144,13 @@
 
 <div id="menu-62" class="md-menu-wrapper" data-width="3">
     <div class="md-menu">
-        <a class="md-menu__item md-button " href="javascript:;">
+        <a class="md-menu__item md-button" data-value="refresh" href="javascript:;">
             Refresh
         </a>
         <a class="md-menu__item md-button is-disabled" href="javascript:;">
             Help
         </a>
-        <a class="md-menu__item md-button" href="javascript:;">
+        <a class="md-menu__item md-button"  data-value="signout" href="javascript:;">
             Signout
         </a>
     </div>
@@ -198,9 +203,9 @@
 <!--center button-->
 <div style="bottom: 50vh;right: 50vw;position: fixed">
     <p>
-        auto
+        data selected
     </p>
-    <button class="md-button md-js-button md-button--icon md-text-white" data-toggle="menu" data-location="auto" data-target="#menu-6">
+    <button class="md-button md-js-button md-button--icon md-text-white" data-type="select" data-toggle="menu" data-location="auto" data-target="#menu-6">
         <i class="material-icons">more_vert</i>
     </button>
 </div>
@@ -217,8 +222,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/menu.js"></script>
 <script>
-    $('#menu-2').on('selected', function(e, index, value){
-        console.log(index);
+    $('#menu-62').on('selected', function(e, value){
         console.log(value);
     });
 </script>
