@@ -105,6 +105,7 @@
 
     MaterialMenu.prototype.handleItemClick_ = function (e) {
       let data = e.originalEvent.target.getAttribute('data-value')
+      if(data !== undefined)
       this.$menu.trigger('selected', data)
       window.setTimeout(function () {
         this.hide()
@@ -139,10 +140,6 @@
       this.$menu.addClass(this.Classes_.IS_OPEN)
       this.$button.attr('aria-hidden', 'false')
       this.$menu.trigger(Event.SHOW)
-    }
-
-    MaterialMenu.prototype.emitSelectData_ = function (){
-
     }
 
     MaterialMenu.prototype.hide = function () {
@@ -292,6 +289,17 @@
       }
       this.setAutoPosition_(customPosition)
       this.toggle(e)
+    }
+
+    MaterialMenu.prototype.destroy = function () {
+      let $items = this.$menuContainer.find('.' + this.Classes_.ITEM)
+      this.$menu.removeClass(this.Classes_.IS_OPEN).removeClass(this.Classes_.IS_LEAVING)
+      $('.' + this.Classes_.BACKDROP).remove()
+      for (let i = 0; i < $items.length; i++) {
+        $($items[i]).unbind('click', this.boundItemClick_)
+        $($items[i]).unbind('keydown', this.boundItemKeydown_)
+      }
+      this.$menu.data(DATA_KEY, null)
     }
 
     MaterialMenu.Plugin_ = function Plugin_(config, button) {
